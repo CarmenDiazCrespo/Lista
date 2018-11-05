@@ -75,6 +75,93 @@ function toString(list){
     } 	
     return str;
 }
+function indexOf(list,elemt){
+    if(isNaN(elemt)){
+        throw "The element is not a number";
+    }
+    var result=-1;
+    var i=0;
+    while(i<size(list) && result===-1){
+        if(list[i]===elemt){
+            result=i+1;
+        }
+        i++;
+    }
+    return result;
+}
+function lastIndexOf(list,elem){
+
+}
+function capacity(list){
+    return MAX_ELEM_LIST;
+}
+function clear(list){
+    var elem = Number.NaN;
+    if (!isEmpty(list)){
+        var length = size(list);	
+        for (var i=0; i<length;i++){
+            list[i] = Number.NaN;
+        } 		 		 		
+    } 	
+}
+function firstElement(list){
+    var first;
+    if (!isEmpty(list)){
+        first = list[0]; 		
+    } else {
+        throw "The list is empty.";
+    }
+    return first;
+} 
+function lastElement(list){
+    var last;
+    if (!isEmpty(list)){
+        last = list[size(list)-1]; 		
+    } else {
+        throw "The list is empty.";
+    }
+    return last;
+}
+function remove(list,index){
+    if(isEmpty(list)){
+        throw "The list is empty";
+    }
+    if(index>size(list)){
+        throw "Indice fuera de límite";
+    }
+    var result= list[index-1];
+
+    for(var i=index-1; i<list.length;i++){
+        list[i]=list[i+1];
+    }
+    return result;
+}
+function removeElement(list,elemt){
+    var found=false;
+    if(isNaN(elemt)){
+        throw "The element is not a number";
+    }
+    var i=0;
+    while(i<size(list) && !found){
+        if(list[i]===elemt){
+            found=true;
+            remove(list,i+1);
+        }
+        i++;
+    }
+    return found;
+}
+function set(list,elemt,index){
+    if(isNaN(elemt)){
+        throw "The element is not a number";
+    }
+    if(index>size(list)){
+        throw "Indice fuera de límite";
+    }
+    var result= list[index-1];
+    list[index-1]=elemt;
+    return result;
+}
 function testlist(){
     var list = create ();
     console.log("Está vacía: " + isEmpty(list));
