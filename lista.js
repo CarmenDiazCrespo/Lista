@@ -26,7 +26,7 @@ function isFull(list){
 function size(list){
     var length=0;
     while (length<MAX_ELEM_LIST && !isNaN(list[length])){ //Comprueblo los elementos que están rellenos, pero no
-                                                        // pueden ser más que el máximo de elementos.
+                                                         // pueden ser más que el máximo de elementos.
         length++;
     }
     return length;
@@ -51,8 +51,8 @@ function addAt(list, elem,index){
     if(isFull(list)){ //Si la lista está llena no puedo meter el nuevo elemento
         throw "La lista está llena";
     }
-    if(index<MAX_ELEM_LIST){
-        list[index-1]=elem; //
+    if(index<MAX_ELEM_LIST){ 
+        list[index-1]=elem; 
     }else{
         throw "El índice es mayor que el tamaño máximo de la lista";
     }
@@ -69,37 +69,48 @@ function toString(list){
     if (!isEmpty(list)){
         var length = size(list);	
         for (var i=0; i<length-1;i++){
-            str = str + list[i] + " - ";
+            str = str + list[i] + " - "; //Pinta el array separados por guiones
         } 		 		
         str = str + list[i]; 		
     } 	
     return str;
 }
-function indexOf(list,elemt){
-    if(isNaN(elemt)){
+function indexOf(list,elem){
+    if(isNaN(elem)){
         throw "The element is not a number";
     }
-    var result=-1;
+    var result=-1;//Por defecto lo pongo a -1
     var i=0;
-    while(i<size(list) && result===-1){
-        if(list[i]===elemt){
-            result=i+1;
+
+    while(i<size(list)){
+        if(list[i]===elem){
+            result=i+1; // Para que el usuario vea del 1-5
         }
         i++;
     }
     return result;
 }
-function lastIndexOf(list,elem){
-
+function lastIndexOf(list,elem){ //
+    if(isNaN(elem)){
+        throw "The element is not a number";
+    }
+    var result=-1;
+    var i=size(list);
+    for(var i=size(list);i>=0;i--){//Recorro a la inversa el array
+        if(list[i]===elem){
+            result=i+1;// Para que el usuario vea del 1-5
+        }
+    }
+    return result;
 }
 function capacity(list){
-    return MAX_ELEM_LIST;
+    return MAX_ELEM_LIST; //La capacidad máxima de elementos de la lista
 }
 function clear(list){
     var elem = Number.NaN;
     if (!isEmpty(list)){
         var length = size(list);	
-        for (var i=0; i<length;i++){
+        for (var i=0; i<length;i++){ //Sustituyo cada entero de la lista con un nan
             list[i] = Number.NaN;
         } 		 		 		
     } 	
@@ -129,37 +140,37 @@ function remove(list,index){
     if(index>size(list)){
         throw "Indice fuera de límite";
     }
-    var result= list[index-1];
+    var result= list[index-1]; //Guardo el resultado en una variable, resto -1 para que sea de 0-4
 
-    for(var i=index-1; i<list.length;i++){
-        list[i]=list[i+1];
+    for(var i=index-1; i<size(list);i++){
+        list[i]=list[i+1]; //Voy metiendo el de la posición siguiente
     }
     return result;
 }
-function removeElement(list,elemt){
+function removeElement(list,elem){
     var found=false;
-    if(isNaN(elemt)){
+    if(isNaN(elem)){
         throw "The element is not a number";
     }
     var i=0;
     while(i<size(list) && !found){
-        if(list[i]===elemt){
-            found=true;
-            remove(list,i+1);
+        if(list[i]===elem){
+            found=true; //Para que pare cuando ha encontrado el elemento
+            remove(list,i+1); 
         }
         i++;
     }
     return found;
 }
-function set(list,elemt,index){
-    if(isNaN(elemt)){
+function set(list,elem,index){
+    if(isNaN(elem)){
         throw "The element is not a number";
     }
     if(index>size(list)){
         throw "Indice fuera de límite";
     }
-    var result= list[index-1];
-    list[index-1]=elemt;
+    var result= list[index-1];//Lo guardo en una variable para luego devolverlo
+    list[index-1]=elem;//Sustituyo el elemento antiguo por el nuevo
     return result;
 }
 function testlist(){
@@ -167,8 +178,25 @@ function testlist(){
     console.log("Está vacía: " + isEmpty(list));
     console.log("Longitud: " + size(list));
     console.log("Está llena: " + isFull(list));
-    console.log(add(list, 5));
+    console.log("Añado un 5 en la posicón: "+add(list, 5));
     console.log("Está vacía: " + isEmpty(list));
-    console.log(addAt(list, 3,3));
+    console.log("Añado un 3 en la posición: "+addAt(list, 3,2));
+    console.log("El elemento 5 está en la posición: "+indexOf(list,5));
+    console.log("Añado un 4 en la posición: "+addAt(list, 4,3));
+    console.log(toString(list));
+    console.log("El elemento 4 está en la posición empezando por atrás: "+lastIndexOf(list,4));
+    console.log("Capacidad máxima: "+capacity(list));
+    console.log(toString(list));
+    clear(list);
+    console.log(toString(list));//No tiene que pintar nada
+    var list=[2,3,1,5,6]; //Lo relleno a mano para hacer pruebas
+    console.log(toString(list));
+    console.log("Borro el elemento de la posición 3 que es: "+remove(list,3));
+    console.log(toString(list));
+    console.log("Borro el elemento 6 de la posición, se ha borrado? "+removeElement(list,6));
+    console.log(toString(list));
+    console.log("Sustiyo el elemento 2 de la posición 3 que había un: "+set(list,2,3));
+    console.log(toString(list));
+
 } 
 window.onload = testlist;
